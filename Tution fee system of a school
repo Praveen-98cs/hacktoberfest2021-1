@@ -1,0 +1,70 @@
+#include<stdio.h>
+
+int subject_fee(int);
+int annual_fee(int);
+int exam_fee(int);
+float discount_rate(int, int);
+
+void main()
+{
+    typedef struct{
+        int no_of_subjects;
+        int no_of_exams;
+        int total;
+        int discount;
+        } students;
+    students student_no[500];
+    char y[3];
+    int i=0;
+    int x;
+
+    do
+    {
+        x=i+1;
+        printf("\nStudent Number %d",x);
+        printf("\nEnter the Number of Subjects Enrolled In : ");
+        scanf("%d", &student_no[i].no_of_subjects);
+
+        printf("Enter the Number of Examinations Taken : ");
+        scanf("%d", &student_no[i].no_of_exams);
+
+        student_no[i].total=annual_fee(student_no[i].no_of_subjects) + exam_fee(student_no[i].no_of_exams) + subject_fee(student_no[i].no_of_subjects);
+        student_no[i].discount = discount_rate(student_no[i].total, student_no[i].no_of_subjects);
+        i++;
+        printf("\n\nAre there any more students type a, otherwise type any number) : ");
+        scanf("%s",y);
+    } while((y[0]=='a') || (y[0]=='A'));
+
+    i = 0;
+    while(student_no[i].no_of_subjects != 0)
+    {
+        x=i+1;
+        printf("\nStudent Number %d\n",x);
+        printf("The Total Fee to Pay : Rs. %d\n", student_no[i].total);
+        printf("If the total fee is paid at the time of the enrollment there is a discount of Rs. %d\n", student_no[i].discount);
+        printf("Total fee with the discount : Rs. %d\n\n", student_no[i].total-(int)student_no[i].discount);
+        ++i;
+    }
+}
+int subject_fee(int x)
+{
+    return(15000*x);
+}
+int annual_fee(int y)
+{
+    if(y>4)
+        return 8000;
+    else
+        return 4000;
+}
+int exam_fee(int z)
+{
+    return(1500*z);
+}
+float discount_rate(int t, int q)
+{
+    if(q>4)
+        return((float)t*0.15);
+    else
+        return((float)t*0.1);
+}
